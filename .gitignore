@@ -1,0 +1,93 @@
+.vscode
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+logs/
+log/
+
+# Spring Boot specific
+target/
+bin/
+out/
+
+# Environment specific
+*.env
+.env
+.env.*
+
+# IDE files
+*.iml
+.idea/
+*.ipr
+*.iws
+.vscode/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Maven / Gradle
+.mvn/
+**/target/
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Generated files
+*.swp
+*.swo
+*~
+
+# Node (if applicable for frontend)
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+
+# Others
+coverage/
+test-output/
+
+# Local database files (if any)
+*.h2.db
+*.mv.db
+*.trace.db
