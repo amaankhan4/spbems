@@ -75,13 +75,6 @@ build/
 # Generated files
 *.swp
 *.swo
-*~
-
-# Node (if applicable for frontend)
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
 
 # Others
 coverage/
