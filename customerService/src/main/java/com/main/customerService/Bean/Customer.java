@@ -40,7 +40,6 @@ public class Customer implements Serializable{
     @Email(message = "Invalid email format")
     private String email;
 
-    // Mobile number should not start with 1 or 2, it should start with > 6
     @Column(name = "Mobile_Number", nullable = false, length = 10)
     @Size(min = 10, max = 10, message = "Mobile number must be exactly 10 digits")
     @Pattern(regexp = "^[6789](?!.*([0-9])\\1{3})[0-9]{9}$", message = "Invalid mobile number")
