@@ -18,7 +18,7 @@ public class BillServiceController {
     @Autowired
     private BillService billService;
 
-    @PostMapping
+    @PostMapping("/registerBill")
     public ResponseEntity<Bill> createBill(@RequestBody Bill bill) {
         return ResponseEntity.ok(billService.createBill(bill));
     }
@@ -29,7 +29,7 @@ public class BillServiceController {
         return bill.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/allBills")
     public ResponseEntity<List<Bill>> getAllBills() {
         return ResponseEntity.ok(billService.getAllBills());
     }
@@ -39,15 +39,15 @@ public class BillServiceController {
         return ResponseEntity.ok(billService.getBillsByConsumerNumber(consumerNumber));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Bill> updateBill(@PathVariable Long id, @RequestBody Bill updatedBill) {
-        Bill bill = billService.updateBill(id, updatedBill);
+    @PutMapping("/updateBill/{billNumber}")
+    public ResponseEntity<Bill> updateBill(@PathVariable Long billNumber, @RequestBody Bill updatedBill) {
+        Bill bill = billService.updateBill(billNumber, updatedBill);
         return bill != null ? ResponseEntity.ok(bill) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBill(@PathVariable Long id) {
-        billService.deleteBill(id);
+    @DeleteMapping("/deleteBill/{billNumber}")
+    public ResponseEntity<Void> deleteBill(@PathVariable Long billNumber) {
+        billService.deleteBill(billNumber);
         return ResponseEntity.noContent().build();
     }
 

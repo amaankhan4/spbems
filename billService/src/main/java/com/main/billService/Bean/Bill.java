@@ -18,13 +18,13 @@ import java.sql.Timestamp;
 @Builder
 public class Bill implements Serializable {
 
-    public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+//    public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 	public Long getBillNumber() {
 		return billNumber;
@@ -123,10 +123,11 @@ public class Bill implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+//	@Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "BillNumber", nullable = false, unique = true)
     @NotNull(message = "Bill number cannot be null")
     private Long billNumber;
