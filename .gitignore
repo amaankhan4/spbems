@@ -84,3 +84,5 @@ test-output/
 *.h2.db
 *.mv.db
 *.trace.db
+
+jpa.txt

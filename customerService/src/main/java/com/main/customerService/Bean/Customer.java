@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Customer implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long CustomerId;
 
     @Column(name = "ConsumerNumber", nullable = false, unique = true, length = 13)
     @Size(min = 13, max = 13, message = "Consumer number must be exactly 13 digits")
@@ -28,7 +28,7 @@ public class Customer implements Serializable{
 
     @Column(name = "FullName", nullable = false, length = 50)
     @Size(max = 50, message = "Name can be of maximum 50 characters")
-    @Pattern(regexp = "[a-zA-Z]+", message = "Name must contain only alphabets")
+    @Pattern(regexp = "[a-zA-Z ]+", message = "Name must contain only alphabets")
     private String fullName;
 
     @Column(name = "address", nullable = false)
@@ -59,15 +59,16 @@ public class Customer implements Serializable{
 
     @Column(name = "Password", nullable = false)
     @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$", message = "Password must contain at least one digit, one lowercase, one uppercase, one special character")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$", 
+            message = "Password must contain at least one digit, one lowercase, one uppercase, and one special character")
     private String password;
 
     @Column(name = "Status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Customer(Long id, String consumerNumber, String fullName, String address, String email, String mobileNumber, CustomerType customerType, ElectricalSection electricalSection, String userId, String password, Status status) {
-        this.id = id;
+    public Customer(Long CustomerId, String consumerNumber, String fullName, String address, String email, String mobileNumber, CustomerType customerType, ElectricalSection electricalSection, String userId, String password, Status status) {
+        this.CustomerId = CustomerId;
         this.consumerNumber = consumerNumber;
         this.fullName = fullName;
         this.address = address;
@@ -90,5 +91,10 @@ public class Customer implements Serializable{
 
     public enum Status {
         ACTIVE, INACTIVE
+    }
+
+    public Object map(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'map'");
     }
 }

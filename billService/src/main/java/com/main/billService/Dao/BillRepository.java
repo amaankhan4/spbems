@@ -1,4 +1,4 @@
-package com.main.billService.DAO;
+package com.main.billService.Dao;
 
 import com.main.billService.Bean.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;

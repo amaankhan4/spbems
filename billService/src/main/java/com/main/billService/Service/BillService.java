@@ -2,7 +2,7 @@ package com.main.billService.Service;
 
 //import com.main.billService.*;
 import com.main.billService.Bean.Bill;
-import com.main.billService.DAO.BillRepository;
+import com.main.billService.Dao.BillRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

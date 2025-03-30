@@ -50,4 +50,9 @@ public class BillServiceController {
         billService.deleteBill(id);
         return ResponseEntity.noContent().build();
     }
+
+    @RequestMapping("/")
+    public String HealthCheck(){
+        return "Health Check Passed.";
+    }
 }
