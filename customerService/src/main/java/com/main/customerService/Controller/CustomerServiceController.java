@@ -73,6 +73,17 @@ public class CustomerServiceController {
         }
         return ResponseEntity.ok(customer);
     }
+
+    @PostMapping(value="/update")
+    public ResponseEntity<String> updateCustomer(@RequestBody Customer customer){
+        try{
+            customerService.updateCustomerDetails((String) session.getAttribute("userId"),customer);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body("Invalid credentials");
+        }
+        return ResponseEntity.ok("Update successful");
+    }
     
 }
 

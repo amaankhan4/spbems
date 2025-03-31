@@ -1,11 +1,20 @@
 package com.main.paymentService.Bean;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "payments", uniqueConstraints = {@UniqueConstraint(columnNames = "PaymentID")})
@@ -16,9 +25,6 @@ import java.sql.Timestamp;
 @Builder
 public class Payment implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -5419451328216904145L;
 
 	@Column(name = "PaymentID", nullable = false, unique = true, length = 50)
