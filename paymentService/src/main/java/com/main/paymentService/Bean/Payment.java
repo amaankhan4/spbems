@@ -1,44 +1,45 @@
 package com.main.paymentService.Bean;
 
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.UUID;
 
 @Entity
-@Table(name = "payments", uniqueConstraints = {@UniqueConstraint(columnNames = "PaymentID")})
+@Table(name="Payment", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "PaymentID"),
+    @UniqueConstraint(columnNames = "TransactionID"),
+    @UniqueConstraint(columnNames = "ReceiptNumber")
+})
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Payment implements Serializable {
 
-	private static final long serialVersionUID = -5419451328216904145L;
 
-	@Column(name = "PaymentID", nullable = false, unique = true, length = 50)
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "PaymentID", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Payment ID can be a maximum of 50 characters")
     private String paymentId;
 
-    @Column(name = "TransactionID", nullable = false, length = 50)
+    @Column(name = "TransactionID", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Transaction ID can be a maximum of 50 characters")
     private String transactionId;
 
-    @Column(name = "ReceiptNumber", nullable = false)
+    @Column(name = "ReceiptNumber", nullable = false, unique = true)
+    @NotNull(message = "Receipt Number is required")
     private Long receiptNumber;
 
     @Column(name = "TransactionDate", nullable = false)
+    @NotNull(message = "Transaction Date is required")
     private Timestamp transactionDate;
 
     @Column(name = "TransactionType", nullable = false)
@@ -46,6 +47,8 @@ public class Payment implements Serializable {
     private TransactionType transactionType;
 
     @Column(name = "TransactionAmount", nullable = false)
+    @NotNull(message = "Transaction Amount is required")
+    @Positive(message = "Transaction Amount must be positive")
     private Float transactionAmount;
 
     @Column(name = "TransactionStatus", nullable = false)
@@ -53,8 +56,120 @@ public class Payment implements Serializable {
     private TransactionStatus transactionStatus;
 
     @Column(name = "BillNumber", nullable = false)
+    @NotNull(message = "Bill Number is required")
     private Long billNumber;
+    
+    public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public Long getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(Long receiptNumber) {
+		this.receiptNumber = receiptNumber;
+	}
+
+	public Timestamp getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Timestamp transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public Float getTransactionAmount() {
+		return transactionAmount;
+	}
+
+	public void setTransactionAmount(Float transactionAmount) {
+		this.transactionAmount = transactionAmount;
+	}
+
+	public TransactionStatus getTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public void setTransactionStatus(TransactionStatus transactionStatus) {
+		this.transactionStatus = transactionStatus;
+	}
+
+	public Long getBillNumber() {
+		return billNumber;
+	}
+
+	public void setBillNumber(Long billNumber) {
+		this.billNumber = billNumber;
+	}
+
+	
+	 public Payment() {
+	    }
+	
+	
+	public Payment(Long id, String paymentId, String transactionId, Long receiptNumber, Timestamp transactionDate, 
+                       TransactionType transactionType, Float transactionAmount, TransactionStatus transactionStatus, 
+                       Long billNumber) {
+        this.id = id;
+        this.paymentId = paymentId;
+        this.transactionId = transactionId;
+        this.receiptNumber = receiptNumber;
+        this.transactionDate = transactionDate;
+        this.transactionType = transactionType;
+        this.transactionAmount = transactionAmount;
+        this.transactionStatus = transactionStatus;
+        this.billNumber = billNumber;
+    }
+	
+	
+	 @PrePersist
+	    public void generateIds() {
+	        if (this.paymentId == null) {
+	            this.paymentId = generatePaymentId();
+	        }
+	        if (this.transactionId == null) {
+	            this.transactionId = generateTransactionId();
+	        }
+	    }
+
+	    private String generatePaymentId() {
+	        return "PAY-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12);
+	    }
+
+	    private String generateTransactionId() {
+	        return "TXN-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12);
+	    }
+	
+	
     public enum TransactionType {
         CREDIT, DEBIT
     }
