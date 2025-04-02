@@ -29,6 +29,14 @@ public class Payment implements Serializable {
     @Column(name = "PaymentID", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Payment ID can be a maximum of 50 characters")
     private String paymentId;
+    
+    @Column(name = "userId", nullable = false, unique = true, length = 50)
+    @Size(max = 50)
+    private String userId;
+    
+    @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
+    @Size(max = 50)
+    private String email;
 
     @Column(name = "TransactionID", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Transaction ID can be a maximum of 50 characters")
@@ -82,6 +90,23 @@ public class Payment implements Serializable {
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 
 	public Long getReceiptNumber() {
 		return receiptNumber;
@@ -136,11 +161,13 @@ public class Payment implements Serializable {
 	    }
 	
 	
-	public Payment(Long id, String paymentId, String transactionId, Long receiptNumber, Timestamp transactionDate, 
+	public Payment(Long id, String paymentId,String userID,String email, String transactionId, Long receiptNumber, Timestamp transactionDate, 
                        TransactionType transactionType, Float transactionAmount, TransactionStatus transactionStatus, 
                        Long billNumber) {
         this.id = id;
         this.paymentId = paymentId;
+        this.userId =  userID;
+        this.email = email;
         this.transactionId = transactionId;
         this.receiptNumber = receiptNumber;
         this.transactionDate = transactionDate;

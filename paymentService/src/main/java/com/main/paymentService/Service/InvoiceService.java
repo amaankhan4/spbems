@@ -38,6 +38,8 @@ public class InvoiceService {
             Invoice invoice = new Invoice();
             invoice.setInvoiceNumber("INV-" + UUID.randomUUID().toString().substring(0, 10));
             invoice.setPaymentId(payment.getPaymentId());
+            invoice.setUserId(payment.getUserId());
+            invoice.setEmail(payment.getEmail());
             invoice.setTransactionId(payment.getTransactionId());
             invoice.setReceiptNumber(payment.getReceiptNumber());
             invoice.setTransactionDate(payment.getTransactionDate());
@@ -69,6 +71,9 @@ public class InvoiceService {
             throw new IllegalArgumentException("Invoice not found for transaction ID: " + transactionId);
         }
         Invoice invoice = invoiceOpt.get();
+        
+        
+        
 
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -86,12 +91,21 @@ public class InvoiceService {
 
         table.addCell(new PdfPCell(new Paragraph("Invoice Number:")));
         table.addCell(new PdfPCell(new Paragraph(invoice.getInvoiceNumber())));
+        
+        table.addCell(new PdfPCell(new Paragraph("User ID:")));
+        table.addCell(new PdfPCell(new Paragraph(invoice.getUserId())));
+        
+        table.addCell(new PdfPCell(new Paragraph("Email:")));
+        table.addCell(new PdfPCell(new Paragraph(invoice.getEmail())));
 
         table.addCell(new PdfPCell(new Paragraph("Payment ID:")));
         table.addCell(new PdfPCell(new Paragraph(invoice.getPaymentId())));
 
         table.addCell(new PdfPCell(new Paragraph("Transaction ID:")));
         table.addCell(new PdfPCell(new Paragraph(invoice.getTransactionId())));
+        
+        table.addCell(new PdfPCell(new Paragraph("ReceiptNumber:")));
+        table.addCell(new PdfPCell(new Paragraph(invoice.getReceiptNumber()!= null? invoice.getReceiptNumber().toString() : "Na")));
 
         table.addCell(new PdfPCell(new Paragraph("Transaction Date:")));
         table.addCell(new PdfPCell(new Paragraph(invoice.getTransactionDate().toString())));

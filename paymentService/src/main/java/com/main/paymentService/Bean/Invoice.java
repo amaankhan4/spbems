@@ -23,7 +23,15 @@ public class Invoice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Column(name = "userId", nullable = false, unique = true, length = 50)
+    @Size(max = 50, message = "userID can be a maximum of 50 characters")
+    private String userId;
+    
+    @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
+    @Size(max = 50, message = "email can be a maximum of 50 characters")
+    private String email;
+    
     @Column(name = "InvoiceNumber", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Invoice Number can be a maximum of 50 characters")
     private String invoiceNumber;
@@ -68,7 +76,7 @@ public class Invoice implements Serializable {
         }
     }
     
-    Payment py = new Payment();
+
 
     private String generateUniqueInvoiceNumber() {
         return "INV-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12);
@@ -114,6 +122,22 @@ public class Invoice implements Serializable {
     public void setReceiptNumber(Long receiptNumber) {
         this.receiptNumber = receiptNumber;
     }
+    
+    public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 //    public String getConsumerDetails() {
 //        return consumerDetails;
