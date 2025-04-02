@@ -31,11 +31,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer loginCustomer(String userId, String password) throws InvalidCredentials {
+    public Customer loginCustomer(String uniqueId, String password, String identifier) throws InvalidCredentials {
 
-        // System.out.println(customerRepository.findByUserId(userId));
+        Customer customer = null;
 
-        Customer customer = customerRepository.findByUserId(userId);
+        if(identifier.charAt(0) == 'u'){
+        customer = customerRepository.findByUserId(uniqueId);
+        }else if(identifier.charAt(0) == 'e'){
+            customer = customerRepository.findByEmail(uniqueId);
+        }
 
         if (customer == null) {
             System.out.println("User ID not found");
@@ -50,8 +54,6 @@ public class CustomerServiceImpl implements CustomerService {
 
         System.out.println(customer);
         return customer;
-        
-        
     }
 
     @Override
@@ -76,20 +78,11 @@ public class CustomerServiceImpl implements CustomerService {
             if (updatedCustomer.getFullName() != null) {
                 existingCustomer.setFullName(updatedCustomer.getFullName());
             }
-            if (updatedCustomer.getAddress() != null) {
-                existingCustomer.setAddress(updatedCustomer.getAddress());
-            }
             if (updatedCustomer.getEmail() != null) {
                 existingCustomer.setEmail(updatedCustomer.getEmail());
             }
             if (updatedCustomer.getMobileNumber() != null) {
                 existingCustomer.setMobileNumber(updatedCustomer.getMobileNumber());
-            }
-            if (updatedCustomer.getCustomerType() != null) {
-                existingCustomer.setCustomerType(updatedCustomer.getCustomerType());
-            }
-            if (updatedCustomer.getElectricalSection() != null) {
-                existingCustomer.setElectricalSection(updatedCustomer.getElectricalSection());
             }
             if (updatedCustomer.getUserId() != null) {
                 existingCustomer.setUserId(updatedCustomer.getUserId());
@@ -97,9 +90,6 @@ public class CustomerServiceImpl implements CustomerService {
             if (updatedCustomer.getPassword() != null) {
                 String encryptedPassword = passwordUtils.encryptPassword(updatedCustomer.getPassword());
                 existingCustomer.setPassword(encryptedPassword);
-            }
-            if (updatedCustomer.getStatus() != null) {
-                existingCustomer.setStatus(updatedCustomer.getStatus());
             }
 
             return customerRepository.save(existingCustomer);

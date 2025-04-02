@@ -1,53 +1,21 @@
 package com.main.billService.Service;
 
-//import com.main.billService.*;
+import java.util.*;
 import com.main.billService.Bean.Bill;
-import com.main.billService.Dao.BillRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface BillService {
 
-import java.util.List;
-import java.util.Optional;
+	Bill createBill(Bill bill);
 
-@Service
-public class BillService {
-    
-    @Autowired
-    private BillRepository billRepository;
+	Optional<Bill> getBillByBillNumber(Long billNumber);
 
-    public Bill createBill(Bill bill) {
-        return billRepository.save(bill);
-    }
+	List<Bill> getAllBills();
 
-    public Optional<Bill> getBillByBillNumber(Long billNumber) {
-        return billRepository.findByBillNumber(billNumber);
-    }
+	List<Bill> getBillsByConsumerNumber(String consumerNumber);
+	
+	Bill updateBill(Long id, Bill updatedBill);
+	
+	void updatePaymentStatus(Long billNumber, Float transactionAmount);
 
-    public List<Bill> getAllBills() {
-        return billRepository.findAll();
-    }
-
-    public List<Bill> getBillsByConsumerNumber(String consumerNumber) {
-        return billRepository.findByConsumerNumber(consumerNumber);
-    }
-
-    public Bill updateBill(Long id, Bill updatedBill) {
-        return billRepository.findById(id).map(bill -> {
-            bill.setPaymentStatus(updatedBill.getPaymentStatus());
-            bill.setConnectionType(updatedBill.getConnectionType());
-            bill.setConnectionStatus(updatedBill.getConnectionStatus());
-            bill.setBillPeriod(updatedBill.getBillPeriod());
-            bill.setBillDate(updatedBill.getBillDate());
-            bill.setDueDate(updatedBill.getDueDate());
-            bill.setDisconnectionDate(updatedBill.getDisconnectionDate());
-            bill.setDueAmount(updatedBill.getDueAmount());
-            bill.setPayableAmount(updatedBill.getPayableAmount());
-            return billRepository.save(bill);
-        }).orElse(null);
-    }
-
-    public void deleteBill(Long id) {
-        billRepository.deleteById(id);
-    }
 }
+

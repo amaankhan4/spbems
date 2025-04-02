@@ -9,10 +9,12 @@ import com.main.billService.Bean.Bill;
 import com.main.billService.Service.BillService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/bills")
+@CrossOrigin("*")
 public class BillServiceController {
 
     @Autowired
@@ -45,10 +47,20 @@ public class BillServiceController {
         return bill != null ? ResponseEntity.ok(bill) : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/deleteBill/{billNumber}")
-    public ResponseEntity<Void> deleteBill(@PathVariable Long billNumber) {
-        billService.deleteBill(billNumber);
-        return ResponseEntity.noContent().build();
+//    @DeleteMapping("/deleteBill/{billNumber}")
+//    public ResponseEntity<Void> deleteBill(@PathVariable Long billNumber) {
+//        billService.deleteBill(billNumber);
+//        return ResponseEntity.noContent().build();
+//    }
+    
+    @PutMapping("/update-payment-status")
+    public ResponseEntity<String> updatePaymentStatus(@RequestBody Map<String, Object> request) {
+        Long billNumber = ((Number) request.get("billNumber")).longValue();
+        Float transactionAmount = ((Number) request.get("transactionAmount")).floatValue();
+
+        billService.updatePaymentStatus(billNumber, transactionAmount);
+
+        return ResponseEntity.ok("Bill payment status updated successfully.");
     }
 
     @RequestMapping("/")
@@ -56,3 +68,6 @@ public class BillServiceController {
         return "Health Check Passed.";
     }
 }
+
+
+

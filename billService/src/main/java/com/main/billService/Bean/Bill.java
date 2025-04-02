@@ -128,6 +128,8 @@ public class Bill implements Serializable {
 //    private Long id;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bill_number_seq")
+	@SequenceGenerator(name = "bill_number_seq", sequenceName = "bill_number_seq", initialValue = 1000, allocationSize = 1)
     @Column(name = "BillNumber", nullable = false, unique = true)
     @NotNull(message = "Bill number cannot be null")
     private Long billNumber;
@@ -181,3 +183,6 @@ public class Bill implements Serializable {
         ACTIVE, INACTIVE, DISCONNECTED
     }
 }
+
+
+

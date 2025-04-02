@@ -1,7 +1,6 @@
 .vscode
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -66,7 +65,6 @@ out/
 Thumbs.db
 
 # Maven / Gradle
-.mvn/
 **/target/
 build/
 .gradle/

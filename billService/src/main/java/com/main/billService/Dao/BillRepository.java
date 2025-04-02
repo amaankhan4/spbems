@@ -12,3 +12,7 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findByConsumerNumber(String consumerNumber);
     Optional<Bill> findByBillNumber(Long billNumber);
 }
+
+
+
+

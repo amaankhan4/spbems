@@ -8,7 +8,7 @@ public interface CustomerService {
 
     Customer registerCustomer(Customer customer) throws Exception;
 
-    Customer loginCustomer(String userId, String password) throws Exception;
+    Customer loginCustomer(String uniqueId, String password, String identifier) throws Exception;
 
     Customer getCustomerDetails(String userId);
 

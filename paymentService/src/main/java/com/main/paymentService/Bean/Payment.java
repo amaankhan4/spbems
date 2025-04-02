@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Size;
@@ -26,7 +27,8 @@ import lombok.Setter;
 public class Payment implements Serializable {
 
 	private static final long serialVersionUID = -5419451328216904145L;
-
+	
+	@Id
 	@Column(name = "PaymentID", nullable = false, unique = true, length = 50)
     @Size(max = 50, message = "Payment ID can be a maximum of 50 characters")
     private String paymentId;
@@ -52,10 +54,85 @@ public class Payment implements Serializable {
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
 
+//    @Column(name = "BillNumber", nullable = false)
+//    private Long billNumber;
+    
     @Column(name = "BillNumber", nullable = false)
-    private Long billNumber;
+    private Long billNumber; 
+    
+    @Column(name = "ConsumerNumber", nullable = false)
+    private Long consumerNumber;
+    
 
-    public enum TransactionType {
+    public String getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public Long getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(Long receiptNumber) {
+		this.receiptNumber = receiptNumber;
+	}
+
+	public Timestamp getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Timestamp transactionDate) {
+		this.transactionDate = transactionDate;
+	}
+
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public Float getTransactionAmount() {
+		return transactionAmount;
+	}
+
+	public void setTransactionAmount(Float transactionAmount) {
+		this.transactionAmount = transactionAmount;
+	}
+
+	public TransactionStatus getTransactionStatus() {
+		return transactionStatus;
+	}
+
+	public void setTransactionStatus(TransactionStatus transactionStatus) {
+		this.transactionStatus = transactionStatus;
+	}
+
+	public Long getBillNumber() {
+		return billNumber;
+	}
+
+	public void setBillNumber(Long billNumber) {
+		this.billNumber = billNumber;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public enum TransactionType {
         CREDIT, DEBIT
     }
 
@@ -63,3 +140,7 @@ public class Payment implements Serializable {
         SUCCESS, FAILED, PENDING
     }
 }
+
+
+
+

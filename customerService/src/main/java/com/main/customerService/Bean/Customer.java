@@ -17,24 +17,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Customer implements Serializable{
+
+    // Multiple consumer no to customer check user story - 11,12
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CustomerId;
 
-    @Column(name = "ConsumerNumber", nullable = false, unique = true, length = 13)
-    @Size(min = 13, max = 13, message = "Consumer number must be exactly 13 digits")
-    @Pattern(regexp = "\\d+",message = "Consumer number must contain only digits")
-    private String consumerNumber;
 
     @Column(name = "FullName", nullable = false, length = 50)
     @Size(max = 50, message = "Name can be of maximum 50 characters")
     @Pattern(regexp = "[a-zA-Z ]+", message = "Name must contain only alphabets")
     private String fullName;
-
-    @Column(name = "address", nullable = false)
-    @Size(min = 10, message = "Address must be at least 10 characters long")
-    private String address;
-
 
     @Column(name = "Email", nullable = false, unique = true)
     @Email(message = "Invalid email format")
@@ -44,14 +38,6 @@ public class Customer implements Serializable{
     @Size(min = 10, max = 10, message = "Mobile number must be exactly 10 digits")
     @Pattern(regexp = "^[6789](?!.*([0-9])\\1{3})[0-9]{9}$", message = "Invalid mobile number")
     private String mobileNumber;
-
-    @Column(name="CustomerType", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CustomerType customerType;
-
-    @Column(name = "ElectricalSection", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ElectricalSection electricalSection;
 
     @Column(name = "UserId", nullable = false, unique = true, length = 20)
     @Size(min = 5, max = 20, message = "User id must be between 5 and 20 characters")
@@ -63,36 +49,16 @@ public class Customer implements Serializable{
             message = "Password must contain at least one digit, one lowercase, one uppercase, and one special character")
     private String password;
 
-    @Column(name = "Status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
-    public Customer(Long CustomerId, String consumerNumber, String fullName, String address, String email, String mobileNumber, CustomerType customerType, ElectricalSection electricalSection, String userId, String password, Status status) {
+    public Customer(Long CustomerId, String fullName, String email, String mobileNumber, String userId, String password) {
         this.CustomerId = CustomerId;
-        this.consumerNumber = consumerNumber;
         this.fullName = fullName;
-        this.address = address;
         this.email = email;
         this.mobileNumber = mobileNumber;
-        this.customerType = customerType;
-        this.electricalSection = electricalSection;
         this.userId = userId;
         this.password = password;
-        this.status = status;
     }
-
-    public enum CustomerType {
-        RESIDENTIAL, COMMERCIAL
-    }
-
-    public enum ElectricalSection {
-        OFFICE, REGIONAL
-    }
-
-    public enum Status {
-        ACTIVE, INACTIVE
-    }
-
+    
     public Object map(Object object) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'map'");
