@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import com.main.adminServices.Dto.Bill;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -45,6 +47,48 @@ public class AdminServiceController{
         response.put("authenticated", false);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
+    @GetMapping(value = "/me")
+	    public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
+	        HttpSession session = request.getSession(false);
+	        
+	        if (session == null || session.getAttribute("type") == null) {
+	            return ResponseEntity.status(401).body("User not logged in");
+	        }
+
+	        String identifier = (String) session.getAttribute("identifier");
+	        String type = (String) session.getAttribute("type");
+	        String name = (String) session.getAttribute("name");
+
+	        return ResponseEntity.ok(new UserDTO(identifier, type, name));
+	    }
+	    public class UserDTO {
+	        private String identifier;
+	        private String type;
+	        private String name;
+	    
+	        public UserDTO(String identifier, String type, String name) {
+	            this.identifier = identifier;
+	            this.type = type;
+	            this.name = name;
+	        }
+	    
+	        public String getIdentifier() { return identifier; }
+	        public String getType() { return type; }
+	        public String getName() { return name; }
+	    }
+	
+	 @PostMapping(value = "/logout")
+	    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request, HttpServletResponse response) {
+	        Map<String, String> res = new HashMap<>();
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            session.invalidate(); // Destroy session
+	        }
+	        res.put("message", "Logout successful");
+	        return ResponseEntity.ok(res);
+	    }
+
 
     @PostMapping(value = "/activate-consumer")
     public ResponseEntity<Consumer> activateConsumer(@RequestBody String consumerNumber) {
